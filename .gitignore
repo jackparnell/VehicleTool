@@ -1,1 +1,4 @@
 .idea
+laravel/vendor
+laravel/.env
+laravel/composer.lock
