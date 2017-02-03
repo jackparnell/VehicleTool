@@ -122,6 +122,12 @@
                 $('#recentDefectsView').slideDown();
             });
 
+            $('#scanQrCode').click(function() {
+                $('form:not(#step1)').hide();
+                $('#step1').slideUp();
+                $('#qrCode').slideDown();
+            });
+
 
         });
     </script>
@@ -149,7 +155,7 @@
 
         <div class="row">
             <label for="scanQrCode">Scan QR Code</label>
-            <button class="btn btn-custom" name="scanQrCode"><img src="{{ asset('images/qr.jpg') }}" id="qrCodeIcon" alt=""></button>
+            <button id="scanQrCode" class="btn btn-custom"><img src="{{ asset('images/qr.jpg') }}" id="qrCodeIcon" alt=""></button>
         </div>
     </form>
 
@@ -340,6 +346,20 @@
         <div class="row">
             <button class="mainMenu btn btn-custom">Main Menu</button>
         </div>
+    </form>
+
+    <form id="qrCode">
+        <h1>Scan QR Code</h1>
+
+        <p>
+            This function will, when developed, allow the user to take a photo of a QR code with their mobile device,
+            which will translate to the unit number of a vehicle.
+        </p>
+
+        <div class="row">
+            <button class="startOver btn btn-custom">Start Over</button>
+        </div>
+
     </form>
 
 @stop
