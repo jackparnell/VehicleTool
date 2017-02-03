@@ -3,6 +3,10 @@
 @section('headerInsert')
 
     <script type="text/javascript">
+        var unitNumber;
+        var firstName;
+        var lastName;
+
         $(document).ready(function() {
 
             // Prevent form submission
@@ -55,6 +59,8 @@
                     return false;
                 }
 
+                unitNumber = $('#unitNumber').val();
+
                 $('#step1').slideUp();
                 $('#step2').slideDown();
             });
@@ -65,22 +71,43 @@
                     return false;
                 }
 
-                $('.unitInfo').html('Unit: ' + $('#unitNumber').val());
+                firstName = $('#firstName').val();
+                lastName = $('#lastName').val();
+
+
+                $('.unitInfo').html('Unit: ' + unitNumber);
 
                 $('#step2').slideUp();
                 $('#step3').slideDown();
             });
 
-            $('#startOver').click(function() {
+            $('.startOver').click(function() {
                 $('input').val('');
-                $('#step2').hide();
-                $('#step3').slideUp();
+                unitNumber = '';
+                firstName = '';
+                lastName = '';
+                $('form:not(#step1)').slideUp();
                 $('#step1').slideDown();
             });
 
             $('.mainMenu').click(function() {
                 $('form').slideUp();
                 $('#step3').slideDown();
+            });
+
+            $('#vehicleCheck').click(function() {
+                $('form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#vehicleCheckView').slideDown();
+            });
+
+            $('#vehicleCheckSubmit').click(function() {
+                $('.vehicleUnitNumber').html(unitNumber);
+                $('.driverFullName').html(firstName + ' ' + lastName);
+
+                $('form:not(#vehicleCheckView)').hide();
+                $('#vehicleCheckView').slideUp();
+                $('#vehicleCheckSubmittedView').slideDown();
             });
 
             $('#recentChecks').click(function() {
@@ -94,6 +121,7 @@
                 $('#step3').slideUp();
                 $('#recentDefectsView').slideDown();
             });
+
 
         });
     </script>
@@ -150,7 +178,7 @@
         </p>
 
         <div class="row">
-            <button class="btn btn-custom">Vehicle Check</button>
+            <button id="vehicleCheck" class="btn btn-custom">Vehicle Check</button>
         </div>
         <div class="row">
             <button id="recentChecks" class="btn btn-custom">Recent Checks</button>
@@ -165,9 +193,76 @@
             <button id="recentDefects" class="btn btn-custom">Recent Defects</button>
         </div>
         <div class="row">
-            <button id="startOver" class="btn btn-custom">Start Over</button>
+            <button class="startOver btn btn-default">Start Over</button>
         </div>
     </form>
+
+    <form id="vehicleCheckView">
+
+        <h1>Vehicle Check</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <div class="row">
+            <label for="oil">Oil</label>
+            <input type="checkbox" name="oil" data-style="wide" checked data-on="Ok" data-off="Issue" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+        </div>
+        <div class="row">
+            <label for="water">Water</label>
+            <input type="checkbox" name="water" data-style="wide" checked data-on="Ok" data-off="Issue" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+        </div>
+        <div class="row">
+            <label for="lights">Lights</label>
+            <input type="checkbox" name="lights" data-style="wide" checked data-on="Ok" data-off="Issue" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+        </div>
+        <div class="row">
+            <label for="tyres">Tyres</label>
+            <input type="checkbox" name="tyres" data-style="wide" checked data-on="Ok" data-off="Issue" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+        </div>
+        <div class="row">
+            <label for="brakes">Brakes</label>
+            <input type="checkbox" name="brakes" data-style="wide" checked data-on="Ok" data-off="Issue" data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+        </div>
+
+        <div class="row">
+            <button id="vehicleCheckSubmit" class="btn btn-custom">Submit Vehicle Check</button>
+        </div>
+
+        <div class="row">
+            <button class="mainMenu btn btn-default">Main Menu</button>
+        </div>
+
+    </form>
+
+    <form id="vehicleCheckSubmittedView">
+
+        <p>
+            Thank you for submitting your vehicle check to Ryder.
+        </p>
+
+        <ul>
+            <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
+            <li>Date: <span class="vehicleCheckSubmittedDate">01/01/2017</span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Driver: <span class="driverFullName"></span></li>
+        </ul>
+
+        <p>
+            Your check will be uploaded to Ryder when your mobile device has a sufficient network connection.
+        </p>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+
+        <div class="row">
+            <button class="startOver btn btn-default">Start Over</button>
+        </div>
+
+    </form>
+
 
     <form id="recentChecksView">
         <h1>Recent Checks</h1>
