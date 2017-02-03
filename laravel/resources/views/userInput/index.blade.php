@@ -53,6 +53,29 @@
                 }
             });
 
+            $('#defectReportView').validate({
+                rules: {
+                    defectCategory: {
+                        required: true
+                    },
+                    defectDescription: {
+                        required: true,
+                        minlength: 3
+                    }
+                },
+                messages: {
+                    defectCategory: {
+                        required: "Please a category."
+                    },
+                    defectDescription: {
+                        required: "Please enter a description.",
+                        minlength: "The description must be at least 3 characters in length."
+                    }
+                }
+            });
+
+
+
             $('#forwardToStep2').click(function() {
 
                 if (!$('#step1').valid()) {
@@ -102,11 +125,14 @@
             });
 
             $('#vehicleCheckSubmit').click(function() {
+
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
 
                 $('form:not(#vehicleCheckView)').hide();
-                $('#vehicleCheckView').slideUp();
+                $('#vehicleCheckView').slideUp(400, function() {
+                    $('input[type=checkbox]').bootstrapToggle('on');
+                });
                 $('#vehicleCheckSubmittedView').slideDown();
             });
 
@@ -115,6 +141,30 @@
                 $('#step3').slideUp();
                 $('#recentChecksView').slideDown();
             });
+
+            $('#defectReport').click(function() {
+                $('form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#defectReportView').slideDown();
+            });
+
+            $('#defectReportSubmit').click(function() {
+
+                if (!$('#defectReportView').valid()) {
+                    return false;
+                }
+
+                $('.vehicleUnitNumber').html(unitNumber);
+                $('.driverFullName').html(firstName + ' ' + lastName);
+
+                $('form:not(#defectReportView)').hide();
+                $('#defectReportView').slideUp(400, function() {
+                    $('#defectReportView input, #defectReportView select, #defectReportView textarea').val('');
+                });
+                $('#defectReportSubmittedView').slideDown();
+            });
+
+
 
             $('#recentDefects').click(function() {
                 $('form:not(#step3)').hide();
@@ -193,7 +243,7 @@
             <button class="btn btn-custom">Damage</button>
         </div>
         <div class="row">
-            <button class="btn btn-custom">Report Defect</button>
+            <button id="defectReport" class="btn btn-custom">Report Defect</button>
         </div>
         <div class="row">
             <button id="recentDefects" class="btn btn-custom">Recent Defects</button>
@@ -307,6 +357,71 @@
         <div class="row">
             <button class="mainMenu btn btn-custom">Main Menu</button>
         </div>
+    </form>
+
+    <form id="defectReportView">
+
+        <h1>Defect Report</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <div class="row">
+            <label for="defectCategory">Category</label>
+            <select name="defectCategory" class="form-control" size="1">
+                <option value="" disabled selected></option>
+                <option>Engine</option>
+                <option>Lights</option>
+                <option>Tyres</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label for="defectDescription">Defect Description</label>
+            <textarea name="defectDescription" class="form-control" placeholder="Enter description"></textarea>
+        </div>
+
+        <div class="row">
+            <label for="driverSignature">Driver Signature</label>
+            <textarea name="driverSignature" class="form-control" placeholder="Enter signature"></textarea>
+        </div>
+
+        <div class="row">
+            <button id="defectReportSubmit" class="btn btn-custom">Submit Defect Report</button>
+        </div>
+
+        <div class="row">
+            <button class="mainMenu btn btn-default">Main Menu</button>
+        </div>
+
+    </form>
+
+    <form id="defectReportSubmittedView">
+
+        <p>
+            Thank you for submitting your defect report to Ryder.
+        </p>
+
+        <ul>
+            <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
+            <li>Category: <span class="vehicleCheckSubmittedDate">01/01/2017</span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Driver: <span class="driverFullName"></span></li>
+        </ul>
+
+        <p>
+            Your defect report will be uploaded to Ryder when your mobile device has a sufficient network connection.
+        </p>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+
+        <div class="row">
+            <button class="startOver btn btn-default">Start Over</button>
+        </div>
+
     </form>
 
     <form id="recentDefectsView">
