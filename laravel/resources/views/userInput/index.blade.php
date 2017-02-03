@@ -239,9 +239,11 @@
         <div class="row">
             <button id="recentChecks" class="btn btn-custom">Recent Checks</button>
         </div>
+        <!--
         <div class="row">
-            <button class="btn btn-custom">Damage</button>
+            <button id="damageReport" class="btn btn-custom">Damage</button>
         </div>
+        -->
         <div class="row">
             <button id="defectReport" class="btn btn-custom">Report Defect</button>
         </div>
