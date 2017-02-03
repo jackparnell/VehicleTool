@@ -36,7 +36,7 @@ h1 {
     font-weight: bold;
 }
 
-#step2, #step3 {
+form:not(#step1) {
     display: none;
 }
 

@@ -65,7 +65,7 @@
                     return false;
                 }
 
-                $('#unitInfo').html('Unit: ' + $('#unitNumber').val());
+                $('.unitInfo').html('Unit: ' + $('#unitNumber').val());
 
                 $('#step2').slideUp();
                 $('#step3').slideDown();
@@ -78,6 +78,22 @@
                 $('#step1').slideDown();
             });
 
+            $('.mainMenu').click(function() {
+                $('form').slideUp();
+                $('#step3').slideDown();
+            });
+
+            $('#recentChecks').click(function() {
+                $('form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#recentChecksView').slideDown();
+            });
+
+            $('#recentDefects').click(function() {
+                $('form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#recentDefectsView').slideDown();
+            });
 
         });
     </script>
@@ -129,7 +145,7 @@
     <form id="step3">
         <h1>Main Menu</h1>
 
-        <p id="unitInfo">
+        <p class="unitInfo">
             Unit
         </p>
 
@@ -137,18 +153,98 @@
             <button class="btn btn-custom">Vehicle Check</button>
         </div>
         <div class="row">
-            <button class="btn btn-custom">Recent Checks</button>
+            <button id="recentChecks" class="btn btn-custom">Recent Checks</button>
         </div>
         <div class="row">
             <button class="btn btn-custom">Damage</button>
         </div>
         <div class="row">
-            <button class="btn btn-custom">Defect</button>
+            <button class="btn btn-custom">Report Defect</button>
+        </div>
+        <div class="row">
+            <button id="recentDefects" class="btn btn-custom">Recent Defects</button>
         </div>
         <div class="row">
             <button id="startOver" class="btn btn-custom">Start Over</button>
         </div>
     </form>
 
+    <form id="recentChecksView">
+        <h1>Recent Checks</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <table class="table table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Driver</th>
+                    <th>Start</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01/01/17</td>
+                    <td>Example</td>
+                    <td>12:00</td>
+                </tr>
+                <tr>
+                    <td>05/01/17</td>
+                    <td>Example</td>
+                    <td>13:12</td>
+                </tr>
+                <tr>
+                    <td>09/01/17</td>
+                    <td>Example</td>
+                    <td>16:02</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+    </form>
+
+    <form id="recentDefectsView">
+        <h1>Recent Defects</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <table class="table table-responsive table-bordered">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Driver</th>
+                <th>Start</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>01/02/17</td>
+                <td>Example</td>
+                <td>18:55</td>
+            </tr>
+            <tr>
+                <td>05/02/17</td>
+                <td>Example</td>
+                <td>16:09</td>
+            </tr>
+            <tr>
+                <td>09/02/17</td>
+                <td>Example</td>
+                <td>11:14</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+    </form>
 
 @stop
