@@ -74,6 +74,32 @@
                 }
             });
 
+            $('#damageReportView').validate({
+                rules: {
+                    damageLocation: {
+                        required: true
+                    },
+                    damageDescription: {
+                        required: true,
+                        minlength: 3
+                    },
+                    damagePhoto: {
+                        required: true
+                    }
+                },
+                messages: {
+                    damageLocation: {
+                        required: "Please a location."
+                    },
+                    damageDescription: {
+                        required: "Please enter a description.",
+                        minlength: "The description must be at least 3 characters in length."
+                    },
+                    damagePhoto: {
+                        required: "Please upload a damage photo."
+                    }
+                }
+            });
 
 
             $('#forwardToStep2').click(function() {
@@ -109,6 +135,7 @@
                 unitNumber = '';
                 firstName = '';
                 lastName = '';
+                $('label.error').hide();
                 $('form:not(#step1)').slideUp();
                 $('#step1').slideDown();
             });
@@ -119,7 +146,7 @@
             });
 
             $('#vehicleCheck').click(function() {
-                $('form:not(#step3)').hide();
+                $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
                 $('#vehicleCheckView').slideDown();
             });
@@ -129,7 +156,7 @@
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
 
-                $('form:not(#vehicleCheckView)').hide();
+                $('label.error, form:not(#vehicleCheckView)').hide();
                 $('#vehicleCheckView').slideUp(400, function() {
                     $('input[type=checkbox]').bootstrapToggle('on');
                 });
@@ -137,15 +164,21 @@
             });
 
             $('#recentChecks').click(function() {
-                $('form:not(#step3)').hide();
+                $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
                 $('#recentChecksView').slideDown();
             });
 
             $('#defectReport').click(function() {
-                $('form:not(#step3)').hide();
+                $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
                 $('#defectReportView').slideDown();
+            });
+
+            $('#damageReport').click(function() {
+                $('label.error, form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#damageReportView').slideDown();
             });
 
             $('#defectReportSubmit').click(function() {
@@ -157,20 +190,48 @@
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
 
-                $('form:not(#defectReportView)').hide();
+                $('label.error, form:not(#defectReportView)').hide();
                 $('#defectReportView').slideUp(400, function() {
                     $('#defectReportView input, #defectReportView select, #defectReportView textarea').val('');
                 });
                 $('#defectReportSubmittedView').slideDown();
             });
 
+            $("#damagePhoto").change(function(){
+                handleDamagePhoto(this);
+            });
 
+            $('#damageReportSubmit').click(function() {
+
+                if (!$('#damageReportView').valid()) {
+                    return false;
+                }
+
+                $('.vehicleUnitNumber').html(unitNumber);
+                $('.driverFullName').html(firstName + ' ' + lastName);
+
+                $('label.error, form:not(#damageReportView)').hide();
+                $('#damageReportView').slideUp(400, function() {
+                    $('#damageReportView input, #damageReportView select, #damageReportView textarea').val('');
+                    $('#damagePhotoPreview').attr('src', '{{ asset('images/camera.png') }}');
+                });
+                $('#damageReportSubmittedView').slideDown();
+            });
+
+
+            $('#recentDamageReports').click(function() {
+                $('form:not(#step3)').hide();
+                $('#step3').slideUp();
+                $('#recentDamageReportsView').slideDown();
+            });
 
             $('#recentDefects').click(function() {
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
                 $('#recentDefectsView').slideDown();
             });
+
+
 
             $('#scanQrCode').click(function() {
                 $('form:not(#step1)').hide();
@@ -239,16 +300,17 @@
         <div class="row">
             <button id="recentChecks" class="btn btn-custom">Recent Checks</button>
         </div>
-        <!--
         <div class="row">
-            <button id="damageReport" class="btn btn-custom">Damage</button>
+            <button id="damageReport" class="btn btn-custom">Report Damage</button>
         </div>
-        -->
+        <div class="row">
+            <button id="recentDamageReports" class="btn btn-custom">Recent Damage Reports</button>
+        </div>
         <div class="row">
             <button id="defectReport" class="btn btn-custom">Report Defect</button>
         </div>
         <div class="row">
-            <button id="recentDefects" class="btn btn-custom">Recent Defects</button>
+            <button id="recentDefects" class="btn btn-custom">Recent Defect Reports</button>
         </div>
         <div class="row">
             <button class="startOver btn btn-default">Start Over</button>
@@ -456,6 +518,120 @@
                 <td>09/02/17</td>
                 <td>Example</td>
                 <td>11:14</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+    </form>
+
+    <form id="damageReportView">
+
+        <h1>Damage Report</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <div class="row">
+            <label for="damageLocation">Damage Location</label>
+            <select name="damageLocation" class="form-control" size="1">
+                <option value="" disabled selected></option>
+                <option>N</option>
+                <option>S</option>
+                <option>F</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label for="damageDescription">Description of Damage</label>
+            <textarea name="damageDescription" class="form-control" placeholder="Enter description"></textarea>
+        </div>
+
+
+
+        <div class="row">
+            <label for="damageDriverSignature">Damage Photo</label>
+            <input id="damagePhoto" name="damagePhoto" type="file" accept="image/*" capture="camera" class="btn btn-custom">
+        </div>
+
+        <div class="row">
+            <img id="damagePhotoPreview" src="{{ asset('images/camera.png') }}" alt="Damage Photo Preview">
+        </div>
+
+        <div class="row">
+            <label for="damageDriverSignature">Driver&#39;s Signature</label>
+            <textarea name="damageDriverSignature" class="form-control" placeholder="Enter signature"></textarea>
+        </div>
+
+        <div class="row">
+            <button id="damageReportSubmit" class="btn btn-custom">Submit Damage Report</button>
+        </div>
+
+        <div class="row">
+            <button class="mainMenu btn btn-default">Main Menu</button>
+        </div>
+
+    </form>
+
+    <form id="damageReportSubmittedView">
+
+        <p>
+            Thank you for submitting your damage report to Ryder.
+        </p>
+
+        <ul>
+            <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Driver: <span class="driverFullName"></span></li>
+        </ul>
+
+        <p>
+            Your damage report will be uploaded to Ryder when your mobile device has a sufficient network connection.
+        </p>
+
+        <div class="row">
+            <button class="mainMenu btn btn-custom">Main Menu</button>
+        </div>
+
+        <div class="row">
+            <button class="startOver btn btn-default">Start Over</button>
+        </div>
+
+    </form>
+
+    <form id="recentDamageReportsView">
+        <h1>Recent Damage Reports</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <table class="table table-responsive table-bordered">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Driver</th>
+                <th>Start</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>05/02/17</td>
+                <td>Example</td>
+                <td>18:11</td>
+            </tr>
+            <tr>
+                <td>11/02/17</td>
+                <td>Example</td>
+                <td>16:23</td>
+            </tr>
+            <tr>
+                <td>17/02/17</td>
+                <td>Example</td>
+                <td>11:55</td>
             </tr>
             </tbody>
         </table>

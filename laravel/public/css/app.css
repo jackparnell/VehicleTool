@@ -64,3 +64,14 @@ form:not(#step1) {
 .toggle.wide {
     min-width: 150px !important;
 }
+label.error {
+    background-color: #FF8888;
+    padding: 3px;
+    border-radius: 3px;
+    max-width: 300px;
+    margin: 0 auto 0 auto;
+}
+
+#damagePhotoPreview {
+    max-width: 300px;
+}
