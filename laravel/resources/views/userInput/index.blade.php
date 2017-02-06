@@ -156,6 +156,8 @@
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
 
+                handleReportCompletion('vehicleCheck');
+
                 $('label.error, form:not(#vehicleCheckView)').hide();
                 $('#vehicleCheckView').slideUp(400, function() {
                     $('input[type=checkbox]').bootstrapToggle('on');
@@ -190,6 +192,8 @@
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
 
+                handleReportCompletion('defectReport');
+
                 $('label.error, form:not(#defectReportView)').hide();
                 $('#defectReportView').slideUp(400, function() {
                     $('#defectReportView input, #defectReportView select, #defectReportView textarea').val('');
@@ -209,6 +213,8 @@
 
                 $('.vehicleUnitNumber').html(unitNumber);
                 $('.driverFullName').html(firstName + ' ' + lastName);
+
+                handleReportCompletion('damageReport');
 
                 $('label.error, form:not(#damageReportView)').hide();
                 $('#damageReportView').slideUp(400, function() {
@@ -317,7 +323,7 @@
         </div>
     </form>
 
-    <form id="vehicleCheckView">
+    <form id="vehicleCheckView" method="post" enctype="multipart/form-data">
 
         <h1>Vehicle Check</h1>
 
@@ -423,7 +429,7 @@
         </div>
     </form>
 
-    <form id="defectReportView">
+    <form id="defectReportView" method="post" enctype="multipart/form-data">
 
         <h1>Defect Report</h1>
 
@@ -527,7 +533,7 @@
         </div>
     </form>
 
-    <form id="damageReportView">
+    <form id="damageReportView" method="post" enctype="multipart/form-data">
 
         <h1>Damage Report</h1>
 

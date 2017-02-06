@@ -3,16 +3,17 @@
         Options -MultiViews
     </IfModule>
 
+	Options +FollowSymLinks
+
     RewriteEngine On
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-    # Handle Front Controller...
+    # Front Controller for Onyho
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+    RewriteRule ^ /onyho/index.php [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
