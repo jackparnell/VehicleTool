@@ -20,6 +20,4 @@ setInterval(function() {
         $('#offlineMode').slideDown('slow');
     }
 
-    console.log(navigator.onLine);
-
 }, 2000);
