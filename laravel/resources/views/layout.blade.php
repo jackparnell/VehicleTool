@@ -10,6 +10,8 @@
     <link href="{{ asset('css/bootstrap-toggle.css') }}" rel="stylesheet">
     <script src="{{ asset('js/bootstrap-toggle.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+
     @yield('headerInsert')
 </head>
 <body>
