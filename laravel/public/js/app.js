@@ -21,8 +21,6 @@ var communicator = {
 
             this.queue[i].pending = true;
 
-            console.log(i);
-
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 method: "POST",
@@ -38,7 +36,6 @@ var communicator = {
                 data: this.queue[i].formData,
                 success: function()
                 {
-                    console.log(i + ' processed.');
                     indexesProcessed.push(i);
                 }
             });
@@ -49,8 +46,6 @@ var communicator = {
         for (j = 0; j < indexesProcessed.length; j++) {
             this.queue.splice(indexesProcessed[j], 1);
         }
-
-        console.log(indexesProcessed);
 
     }
 };
@@ -93,7 +88,6 @@ setInterval(function() {
 
 // Process communications
 setInterval(function() {
-    console.log('Processing...');
     communicator.processQueue();
 }, 10000);
 
