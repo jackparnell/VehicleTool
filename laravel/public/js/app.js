@@ -1,4 +1,5 @@
-function handleDamagePhoto(input) {
+function handleDamagePhoto(input)
+{
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -9,3 +10,16 @@ function handleDamagePhoto(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+
+// Handle offline mode
+setInterval(function() {
+    if (navigator.onLine) {
+        $('#offlineMode').slideUp('slow');
+    } else {
+        $('#offlineMode').slideDown('slow');
+    }
+
+    console.log(navigator.onLine);
+
+}, 2000);

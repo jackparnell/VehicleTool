@@ -655,4 +655,8 @@
 
     </form>
 
+    <div id="offlineMode" class="alert alert-info">
+        <strong>Notice:</strong> Currently using application in offline mode.
+    </div>
+
 @stop
