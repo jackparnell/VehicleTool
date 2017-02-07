@@ -111,7 +111,12 @@
                 unitNumber = $('#unitNumber').val();
 
                 $('#step1').slideUp();
-                $('#step2').slideDown();
+                $('#step2').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#step2";
+                    }
+                );
             });
 
             $('#forwardToStep3').click(function() {
@@ -127,7 +132,12 @@
                 $('.unitInfo').html('Unit: ' + unitNumber);
 
                 $('#step2').slideUp();
-                $('#step3').slideDown();
+                $('#step3').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#step3";
+                    }
+                );
             });
 
             $('.startOver').click(function() {
@@ -137,18 +147,33 @@
                 lastName = '';
                 $('label.error').hide();
                 $('form:not(#step1)').slideUp();
-                $('#step1').slideDown();
+                $('#step1').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#step1";
+                    }
+                );
             });
 
             $('.mainMenu').click(function() {
                 $('form').slideUp();
-                $('#step3').slideDown();
+                $('#step3').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#step3";
+                    }
+                );
             });
 
             $('#vehicleCheck').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#vehicleCheckView').slideDown();
+                $('#vehicleCheckView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#vehicleCheckView";
+                    }
+                );
             });
 
             $('#vehicleCheckSubmit').click(function() {
@@ -162,25 +187,49 @@
                 $('#vehicleCheckView').slideUp(400, function() {
                     $('input[type=checkbox]').bootstrapToggle('on');
                 });
-                $('#vehicleCheckSubmittedView').slideDown();
+                $('#vehicleCheckSubmittedView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#vehicleCheckSubmittedView";
+                    }
+                );
             });
 
             $('#recentChecks').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
                 $('#recentChecksView').slideDown();
+
+                $('#recentChecksView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#recentChecksView";
+                    }
+                );
             });
 
             $('#defectReport').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#defectReportView').slideDown();
+
+                $('#defectReportView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#defectReportView";
+                    }
+                );
             });
 
             $('#damageReport').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#damageReportView').slideDown();
+
+                $('#damageReportView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#damageReportView";
+                    }
+                );
             });
 
             $('#defectReportSubmit').click(function() {
@@ -198,7 +247,14 @@
                 $('#defectReportView').slideUp(400, function() {
                     $('#defectReportView input, #defectReportView select, #defectReportView textarea').val('');
                 });
-                $('#defectReportSubmittedView').slideDown();
+
+                $('#defectReportSubmittedView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#defectReportSubmittedView";
+                    }
+                );
+
             });
 
             $("#damagePhoto").change(function(){
@@ -221,20 +277,40 @@
                     $('#damageReportView input, #damageReportView select, #damageReportView textarea').val('');
                     $('#damagePhotoPreview').attr('src', '{{ asset('images/camera.png') }}');
                 });
-                $('#damageReportSubmittedView').slideDown();
+
+                $('#damageReportSubmittedView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#damageReportSubmittedView";
+                    }
+                );
+
             });
 
 
             $('#recentDamageReports').click(function() {
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#recentDamageReportsView').slideDown();
+
+                $('#recentDamageReportsView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#recentDamageReportsView";
+                    }
+                );
             });
 
             $('#recentDefects').click(function() {
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#recentDefectsView').slideDown();
+
+                $('#recentDefectsView').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#recentDefectsView";
+                    }
+                );
+
             });
 
 
@@ -243,8 +319,28 @@
                 $('form:not(#step1)').hide();
                 $('#step1').slideUp();
                 $('#qrCode').slideDown();
+
+                $('#qrCode').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#qrCode";
+                    }
+                );
+
             });
 
+
+            $(window).hashchange( function(){
+                var hash = location.hash;
+
+                if (!hash) {
+                    hash = '#step1';
+                }
+
+                $('form:not(' + hash + ')').hide();
+
+                $(hash).slideDown();
+            });
 
         });
     </script>
