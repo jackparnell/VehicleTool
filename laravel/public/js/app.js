@@ -70,9 +70,18 @@ function handleReportCompletion(type)
     var formData = new FormData(form);
     var communication = {
         type: type,
+        guid: generateGuid(),
         formData: formData
     };
     communicator.addToQueue(communication);
+}
+
+function generateGuid()
+{
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 
