@@ -1,3 +1,8 @@
+var unitNumber;
+var driverFirstName;
+var driverLastName;
+var vehicleData = {};
+
 var communicator = {
     queue: [],
     addToQueue: function(communication)
@@ -24,9 +29,9 @@ var communicator = {
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 method: "POST",
-                url: "api",
+                url: "api/" + this.queue[i].type + "/create",
 
-                // Synchronous calls are deprecated deprecated, however we lose the value of i when doing async.
+                // Synchronous calls are deprecated, however we lose the value of i when doing async.
                 // i is needed so we can splice processed communications our of array. Maybe find another approach.
                 async: false,
 
@@ -68,6 +73,9 @@ function handleReportCompletion(type)
 
     var form = $('form#' + type + 'View')[0];
     var formData = new FormData(form);
+    formData.append('unitNumber', unitNumber);
+    formData.append('driverFirstName', driverFirstName);
+    formData.append('driverLastName', driverLastName);
     var communication = {
         type: type,
         guid: generateGuid(),
@@ -84,6 +92,31 @@ function generateGuid()
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+function downloadVehicleData()
+{
+
+    if (!unitNumber || !navigator.onLine) {
+        return false;
+    }
+
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        method: "GET",
+        url: "api/vehicle/" + unitNumber,
+        async: true,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        cache : false,
+        success: function(response)
+        {
+            vehicleData[unitNumber] = response;
+        }
+    });
+
+    return true;
+
+}
 
 // Handle offline mode
 setInterval(function() {
@@ -100,3 +133,7 @@ setInterval(function() {
     communicator.processQueue();
 }, 10000);
 
+// Download vehicle data
+setInterval(function() {
+    downloadVehicleData(unitNumber);
+}, 120000);

@@ -3,9 +3,6 @@
 @section('headerInsert')
 
     <script type="text/javascript">
-        var unitNumber;
-        var firstName;
-        var lastName;
 
         $(document).ready(function() {
 
@@ -32,21 +29,21 @@
 
             $('#step2').validate({
                 rules: {
-                    firstName: {
+                    driverFirstName: {
                         required: true,
                         minlength: 2
                     },
-                    lastName: {
+                    driverLastName: {
                         required: true,
                         minlength: 2
                     }
                 },
                 messages: {
-                    firstName: {
+                    driverFirstName: {
                         required: "Please the driver's first name.",
                         minlength: "The driver's first name must be at least 2 characters in length."
                     },
-                    lastName: {
+                    driverLastName: {
                         required: "Please the driver's last name.",
                         minlength: "The driver's last name must be at least 2 characters in length."
                     }
@@ -109,6 +106,7 @@
                 }
 
                 unitNumber = $('#unitNumber').val();
+                downloadVehicleData();
 
                 $('#step1').slideUp();
                 $('#step2').slideDown(
@@ -125,8 +123,8 @@
                     return false;
                 }
 
-                firstName = $('#firstName').val();
-                lastName = $('#lastName').val();
+                driverFirstName = $('#driverFirstName').val();
+                driverLastName = $('#driverLastName').val();
 
 
                 $('.unitInfo').html('Unit: ' + unitNumber);
@@ -143,8 +141,8 @@
             $('.startOver').click(function() {
                 $('input').val('');
                 unitNumber = '';
-                firstName = '';
-                lastName = '';
+                driverFirstName = '';
+                driverLastName = '';
                 $('label.error').hide();
                 $('form:not(#step1)').slideUp();
                 $('#step1').slideDown(
@@ -168,6 +166,7 @@
             $('#vehicleCheck').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
+                $('#vehicleCheckView .guid').val(generateGuid());
                 $('#vehicleCheckView').slideDown(
                     400,
                     function() {
@@ -179,7 +178,7 @@
             $('#vehicleCheckSubmit').click(function() {
 
                 $('.vehicleUnitNumber').html(unitNumber);
-                $('.driverFullName').html(firstName + ' ' + lastName);
+                $('.driverFullName').html(driverFirstName + ' ' + driverLastName);
 
                 handleReportCompletion('vehicleCheck');
 
@@ -211,7 +210,7 @@
             $('#defectReport').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-
+                $('#defectReportView .guid').val(generateGuid());
                 $('#defectReportView').slideDown(
                     400,
                     function() {
@@ -223,7 +222,7 @@
             $('#damageReport').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-
+                $('#damageReportView .guid').val(generateGuid());
                 $('#damageReportView').slideDown(
                     400,
                     function() {
@@ -239,7 +238,7 @@
                 }
 
                 $('.vehicleUnitNumber').html(unitNumber);
-                $('.driverFullName').html(firstName + ' ' + lastName);
+                $('.driverFullName').html(driverFirstName + ' ' + driverLastName);
 
                 handleReportCompletion('defectReport');
 
@@ -268,7 +267,7 @@
                 }
 
                 $('.vehicleUnitNumber').html(unitNumber);
-                $('.driverFullName').html(firstName + ' ' + lastName);
+                $('.driverFullName').html(driverFirstName + ' ' + driverLastName);
 
                 handleReportCompletion('damageReport');
 
@@ -376,12 +375,12 @@
         <h1>Confirm Driver Details</h1>
 
         <div class="row">
-            <label for="lastName">Surname</label>
-            <input class="form-control" id="lastName" name="lastName" placeholder="Example: Smith">
+            <label for="driverLastName">Surname</label>
+            <input class="form-control" id="driverLastName" name="driverLastName" placeholder="Example: Smith">
         </div>
         <div class="row">
-            <label for="firstName">First Name</label>
-            <input class="form-control" id="firstName" name="firstName" placeholder="Example: John">
+            <label for="driverFirstName">First Name</label>
+            <input class="form-control" id="driverFirstName" name="driverFirstName" placeholder="Example: John">
         </div>
 
         <div class="row">
@@ -420,6 +419,7 @@
     </form>
 
     <form id="vehicleCheckView" method="post" enctype="multipart/form-data">
+        <input class="guid" type="hidden" name="guid" value="">
 
         <h1>Vehicle Check</h1>
 
@@ -467,7 +467,7 @@
         <ul>
             <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
             <li>Date: <span class="vehicleCheckSubmittedDate">01/01/2017</span></li>
-            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">12:20</span></li>
             <li>Driver: <span class="driverFullName"></span></li>
         </ul>
 
@@ -526,6 +526,7 @@
     </form>
 
     <form id="defectReportView" method="post" enctype="multipart/form-data">
+        <input class="guid" type="hidden" name="guid" value="">
 
         <h1>Defect Report</h1>
 
@@ -572,7 +573,7 @@
         <ul>
             <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
             <li>Category: <span class="vehicleCheckSubmittedDate">01/01/2017</span></li>
-            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">12:20</span></li>
             <li>Driver: <span class="driverFullName"></span></li>
         </ul>
 
@@ -630,6 +631,7 @@
     </form>
 
     <form id="damageReportView" method="post" enctype="multipart/form-data">
+        <input class="guid" type="hidden" name="guid" value="">
 
         <h1>Damage Report</h1>
 
@@ -655,7 +657,7 @@
 
 
         <div class="row">
-            <label for="damageDriverSignature">Damage Photo</label>
+            <label for="damagePhoto">Damage Photo</label>
             <input id="damagePhoto" name="damagePhoto" type="file" accept="image/*" capture="camera" class="btn btn-custom">
         </div>
 
@@ -686,7 +688,8 @@
 
         <ul>
             <li>Vehicle: <span class="vehicleUnitNumber"></span></li>
-            <li>Time: <span class="vehicleCheckSubmittedTime">01/01/2017</span></li>
+            <li>Date: <span class="vehicleCheckSubmittedDate">01/01/2017</span></li>
+            <li>Time: <span class="vehicleCheckSubmittedTime">12:20</span></li>
             <li>Driver: <span class="driverFullName"></span></li>
         </ul>
 
