@@ -82,6 +82,28 @@ class Misc
 
     }
 
+    public static function determineAppName()
+    {
+
+        if (function_exists('env') && env('APP_NAME')) {
+            return env('APP_NAME');
+        }
+
+        if (defined('APP_NAME')) {
+            return APP_NAME;
+        }
+
+        $pathExploded = explode('/', base_path());
+
+        if (last($pathExploded) != 'laravel') {
+            return ucfirst(last($pathExploded));
+        } else {
+            end($pathExploded);
+            return ucfirst(prev($pathExploded));
+        }
+
+    }
+
     public static function isIpv4AddressValid($ipv4Address) {
 
         if (!filter_var($ipv4Address, FILTER_VALIDATE_IP) === false) {
