@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class TaskLog extends Eloquent {
 
-	protected $table = 'taskLog';
+    protected $table = 'taskLog';
     public $timestamps = false;
 
-	public $fillable = array(
+    public $fillable = array(
         'name',
         'start',
         'end',
@@ -23,8 +23,8 @@ class TaskLog extends Eloquent {
         'runTimeFlag',
         'runTimeFlagNotificationSent'
     );
-	
-	protected $guarded = array(
+
+    protected $guarded = array(
         'id'
     );
 
@@ -57,7 +57,7 @@ class TaskLog extends Eloquent {
     public function generateRunTimeSeconds()
     {
         if (!$this->end) {
-            return FALSE;;
+            return FALSE;
         }
 
         $this->runTimeSeconds = strtotime($this->end) - strtotime($this->start);
@@ -71,6 +71,7 @@ class TaskLog extends Eloquent {
             return false;
         }
         if ($this->runTimeSeconds > $this->maximumRunTimeExpectationSeconds) {
+            $this->runTimeFlag = 1;
             $this->sendRunTimeFlagNotification();
         }
         return true;
@@ -86,10 +87,11 @@ class TaskLog extends Eloquent {
         $this->runTimeFlagNotificationSent = 1;
 
         $appName = Misc::determineAppName();
+        $serverName = gethostname();
 
         mail(
             'UKDevTeam@ryder.com',
-            $appName.' Task Run Time Flag Notification',
+            $appName.' '.$serverName.' Task Run Time Flag Notification',
             $this->name.'  took '.$this->runTimeSeconds.' seconds to run. '.PHP_EOL.
             'The maximum expected run time is '.$this->maximumRunTimeExpectationSeconds.'.',
             'FROM:UKDevTeam@ryder.com'
