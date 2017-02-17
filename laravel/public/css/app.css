@@ -93,3 +93,7 @@ label.error {
     text-align: center;
 
 }
+
+#recentDamageReportsView tr td {
+    cursor: pointer;
+}

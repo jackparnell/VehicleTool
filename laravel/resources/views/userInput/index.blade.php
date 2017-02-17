@@ -302,6 +302,26 @@
                 );
             });
 
+            $('#recentDamageReportsView tr td').click(function(e) {
+                $('form:not(#recentDamageReportsView)').hide();
+                $('#recentDamageReportsView').slideUp();
+
+                console.log(e);
+                console.log(this.id);
+                console.log(this.parent('tr').id);
+
+
+                $('#recentDamageRow').slideDown(
+                    400,
+                    function() {
+                        window.location.hash = "#recentDamageRow";
+                    }
+                );
+            });
+
+
+
+
             $('#recentDefects').click(function() {
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
@@ -761,6 +781,23 @@
 
         <div class="row">
             <button class="startOver btn btn-custom">Start Over</button>
+        </div>
+
+    </form>
+
+    <form id="recentDamageRow">
+        <h1>Recent Damage</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <ul>
+            <li>Driver: <span class="value"></span></li>
+        </ul>
+
+        <div class="row">
+            <button id="recentDamageReports" class="btn btn-custom">Back to Results</button>
         </div>
 
     </form>

@@ -180,11 +180,12 @@ function populateRecentDamageReports()
 
     for (var i in vehicleData[unitNumber].damageReports) {
 
-        var rowHtml = '<tr>'
+        var rowHtml = '<tr id="' + vehicleData[unitNumber].damageReports[i].guid + '">'
             + '<td>' + vehicleData[unitNumber].damageReports[i].date + '</td>'
             + '<td>' + vehicleData[unitNumber].damageReports[i].driverFirstName + ' ' + vehicleData[unitNumber].damageReports[i].driverLastName + '</td>'
             + '<td>' + vehicleData[unitNumber].damageReports[i].time + '</td>'
             + '</tr>';
+
 
         $('#recentDamageReportsView table tbody').append(rowHtml);
 

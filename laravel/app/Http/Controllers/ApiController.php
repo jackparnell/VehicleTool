@@ -38,7 +38,8 @@ class ApiController extends Controller {
                 'driverLastName' => $damageReport->driverLastName,
                 'damageLocation' => $damageReport->damageLocation,
                 'damageDescription' => $damageReport->damageDescription,
-                'damageDriverSignature' => $damageReport->damageDriverSignature
+                'damageDriverSignature' => $damageReport->damageDriverSignature,
+                'guid' => $damageReport->guid
             ];
         }
 
@@ -51,8 +52,9 @@ class ApiController extends Controller {
                 'driverFirstName' => $defectReport->driverFirstName,
                 'driverLastName' => $defectReport->driverLastName,
                 'defectCategory' => $defectReport->defectCategory,
-                'defectDescription' => $damageReport->defectDescription,
-                'driverSignature' => $damageReport->driverSignature
+                'defectDescription' => $defectReport->defectDescription,
+                'driverSignature' => $defectReport->driverSignature,
+                'guid' => $defectReport->guid
             ];
         }
 
@@ -68,7 +70,8 @@ class ApiController extends Controller {
                 'water' => $vehicleCheck->water,
                 'lights' => $vehicleCheck->lights,
                 'tyres' => $vehicleCheck->tyres,
-                'brakes' => $vehicleCheck->brakes
+                'brakes' => $vehicleCheck->brakes,
+                'guid' => $vehicleCheck->guid
             ];
         }
 
