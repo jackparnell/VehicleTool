@@ -197,7 +197,8 @@
             $('#recentChecks').click(function() {
                 $('label.error, form:not(#step3)').hide();
                 $('#step3').slideUp();
-                $('#recentChecksView').slideDown();
+
+                populateRecentChecks();
 
                 $('#recentChecksView').slideDown(
                     400,
@@ -291,6 +292,8 @@
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
 
+                populateRecentDamageReports();
+
                 $('#recentDamageReportsView').slideDown(
                     400,
                     function() {
@@ -302,6 +305,8 @@
             $('#recentDefects').click(function() {
                 $('form:not(#step3)').hide();
                 $('#step3').slideUp();
+
+                populateRecentDefects();
 
                 $('#recentDefectsView').slideDown(
                     400,

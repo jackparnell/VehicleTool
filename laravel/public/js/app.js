@@ -52,6 +52,8 @@ var communicator = {
             this.queue.splice(indexesProcessed[j], 1);
         }
 
+        downloadVehicleData();
+
     }
 };
 
@@ -117,6 +119,80 @@ function downloadVehicleData()
     return true;
 
 }
+
+function populateRecentChecks()
+{
+
+    $('#recentChecksView table tbody').html('');
+
+    if (jQuery.isEmptyObject(vehicleData[unitNumber].vehicleChecks)) {
+        $('#recentChecksView table tbody').append('<tr><td colspan="3">No recent checks found.</td></tr>');
+        return;
+    }
+
+    for (var i in vehicleData[unitNumber].vehicleChecks) {
+
+        var rowHtml = '<tr>'
+            + '<td>' + vehicleData[unitNumber].vehicleChecks[i].date + '</td>'
+            + '<td>' + vehicleData[unitNumber].vehicleChecks[i].driverFirstName + ' ' + vehicleData[unitNumber].vehicleChecks[i].driverLastName + '</td>'
+            + '<td>' + vehicleData[unitNumber].vehicleChecks[i].time + '</td>'
+            + '</tr>';
+
+        $('#recentChecksView table tbody').append(rowHtml);
+
+    }
+
+}
+
+function populateRecentDefects()
+{
+
+    $('#recentDefectsView table tbody').html('');
+
+    if (jQuery.isEmptyObject(vehicleData[unitNumber].defectReports)) {
+        $('#recentDefectsView table tbody').append('<tr><td colspan="3">No recent defects found.</td></tr>');
+        return;
+    }
+
+    for (var i in vehicleData[unitNumber].defectReports) {
+
+        var rowHtml = '<tr>'
+                    + '<td>' + vehicleData[unitNumber].defectReports[i].date + '</td>'
+                    + '<td>' + vehicleData[unitNumber].defectReports[i].driverFirstName + ' ' + vehicleData[unitNumber].defectReports[i].driverLastName + '</td>'
+                    + '<td>' + vehicleData[unitNumber].defectReports[i].time + '</td>'
+                    + '</tr>';
+
+        $('#recentDefectsView table tbody').append(rowHtml);
+
+    }
+
+}
+
+function populateRecentDamageReports()
+{
+
+    $('#recentDamageReportsView table tbody').html('');
+
+    if (jQuery.isEmptyObject(vehicleData[unitNumber].damageReports)) {
+        $('#recentDamageReportsView table tbody').append('<tr><td colspan="3">No recent damage reports found.</td></tr>');
+        return;
+    }
+
+    for (var i in vehicleData[unitNumber].damageReports) {
+
+        var rowHtml = '<tr>'
+            + '<td>' + vehicleData[unitNumber].damageReports[i].date + '</td>'
+            + '<td>' + vehicleData[unitNumber].damageReports[i].driverFirstName + ' ' + vehicleData[unitNumber].damageReports[i].driverLastName + '</td>'
+            + '<td>' + vehicleData[unitNumber].damageReports[i].time + '</td>'
+            + '</tr>';
+
+        $('#recentDamageReportsView table tbody').append(rowHtml);
+
+    }
+
+}
+
+
 
 // Handle offline mode
 setInterval(function() {

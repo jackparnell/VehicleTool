@@ -59,7 +59,7 @@ class ApiController extends Controller {
         $vehicleChecks = VehicleCheck::where('unitNumber', $unitNumber)->orderBy('created_at', 'DESC')->get();
 
         foreach ($vehicleChecks as $vehicleCheck) {
-            $output['defectReports'][$vehicleCheck->id] = [
+            $output['vehicleChecks'][$vehicleCheck->id] = [
                 'date' => date('d/m/Y', strtotime($vehicleCheck->created_at)),
                 'time' => date('H:i:s', strtotime($vehicleCheck->created_at)),
                 'driverFirstName' => $vehicleCheck->driverFirstName,
