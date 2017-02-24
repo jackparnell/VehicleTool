@@ -132,7 +132,7 @@ function populateRecentChecks()
 
     for (var i in vehicleData[unitNumber].vehicleChecks) {
 
-        var rowHtml = '<tr>'
+        var rowHtml = '<tr id="' + vehicleData[unitNumber].vehicleChecks[i].guid + '">'
             + '<td>' + vehicleData[unitNumber].vehicleChecks[i].date + '</td>'
             + '<td>' + vehicleData[unitNumber].vehicleChecks[i].driverFirstName + ' ' + vehicleData[unitNumber].vehicleChecks[i].driverLastName + '</td>'
             + '<td>' + vehicleData[unitNumber].vehicleChecks[i].time + '</td>'
@@ -141,6 +141,8 @@ function populateRecentChecks()
         $('#recentChecksView table tbody').append(rowHtml);
 
     }
+
+    generateRecentChecksViewListeners();
 
 }
 
@@ -156,7 +158,7 @@ function populateRecentDefects()
 
     for (var i in vehicleData[unitNumber].defectReports) {
 
-        var rowHtml = '<tr>'
+        var rowHtml = '<tr id="' + vehicleData[unitNumber].defectReports[i].guid + '">'
                     + '<td>' + vehicleData[unitNumber].defectReports[i].date + '</td>'
                     + '<td>' + vehicleData[unitNumber].defectReports[i].driverFirstName + ' ' + vehicleData[unitNumber].defectReports[i].driverLastName + '</td>'
                     + '<td>' + vehicleData[unitNumber].defectReports[i].time + '</td>'
@@ -165,6 +167,8 @@ function populateRecentDefects()
         $('#recentDefectsView table tbody').append(rowHtml);
 
     }
+
+    generateRecentDefectsViewListeners();
 
 }
 
@@ -191,8 +195,173 @@ function populateRecentDamageReports()
 
     }
 
+    generateRecentDamageReportsViewListeners();
+
 }
 
+function generateRecentDamageReportsViewListeners()
+{
+    $('#recentDamageReportsView td').click(function(e) {
+
+        console.log(e);
+
+        $('form:not(#recentDamageReportsView)').hide();
+        $('#recentDamageReportsView').slideUp();
+
+        var guid = this.closest('tr').id;
+
+        populateRecentDamageRow(guid);
+
+        $('#recentDamageRow').slideDown(
+            400,
+            function() {
+                window.location.hash = '#recentDamageRow_' + guid;
+            }
+        );
+
+    });
+
+}
+
+function generateRecentDefectsViewListeners()
+{
+    $('#recentDefectsView td').click(function(e) {
+
+        $('form:not(#recentDefectsView)').hide();
+        $('#recentDefectsView').slideUp();
+
+        var guid = this.closest('tr').id;
+
+        populateRecentDefectRow(guid);
+
+        $('#recentDefectRow').slideDown(
+            400,
+            function() {
+                window.location.hash = '#recentDefectRow_' + guid;
+            }
+        );
+
+    });
+
+}
+
+function generateRecentChecksViewListeners()
+{
+    $('#recentChecksView td').click(function(e) {
+
+        $('form:not(#recentChecksView)').hide();
+        $('#recentChecksView').slideUp();
+
+        var guid = this.closest('tr').id;
+
+        populateVehicleCheckRow(guid);
+
+        $('#vehicleCheckRow').slideDown(
+            400,
+            function() {
+                window.location.hash = '#vehicleCheckRow_' + guid;
+            }
+        );
+
+    });
+
+}
+
+function populateRecentDamageRow(guid)
+{
+    var row = getRowByGuid(guid);
+
+    var simpleFields = [
+        'driverFirstName',
+        'driverLastName',
+        'damageDriverSignature',
+        'damageDescription',
+        'damageLocation',
+        'date',
+        'time'
+    ];
+
+    simpleFields.forEach(function(element) {
+        ($('#recentDamageRow .' + element)).html(row[element]);
+    });
+
+}
+
+function populateRecentDefectRow(guid)
+{
+    var row = getRowByGuid(guid);
+
+    var simpleFields = [
+        'driverFirstName',
+        'driverLastName',
+        'driverSignature',
+        'defectDescription',
+        'defectCategory',
+        'date',
+        'time'
+    ];
+
+    simpleFields.forEach(function(element) {
+        ($('#recentDefectRow .' + element)).html(row[element]);
+    });
+
+}
+
+function populateVehicleCheckRow(guid)
+{
+    var row = getRowByGuid(guid);
+
+    var simpleFields = [
+        'driverFirstName',
+        'driverLastName',
+        'oil',
+        'water',
+        'lights',
+        'tyres',
+        'brakes',
+        'date',
+        'time'
+    ];
+
+    simpleFields.forEach(function(element) {
+        ($('#vehicleCheckRow .' + element)).html(row[element]);
+    });
+
+}
+
+function getRowByGuid(guid)
+{
+    var row = {};
+
+    for (var property in vehicleData[unitNumber].damageReports) {
+        if (vehicleData[unitNumber].damageReports.hasOwnProperty(property)) {
+            if (vehicleData[unitNumber].damageReports[property].guid == guid) {
+                row = vehicleData[unitNumber].damageReports[property];
+                break;
+            }
+        }
+    }
+
+    for (var property in vehicleData[unitNumber].defectReports) {
+        if (vehicleData[unitNumber].defectReports.hasOwnProperty(property)) {
+            if (vehicleData[unitNumber].defectReports[property].guid == guid) {
+                row = vehicleData[unitNumber].defectReports[property];
+                break;
+            }
+        }
+    }
+
+    for (var property in vehicleData[unitNumber].vehicleChecks) {
+        if (vehicleData[unitNumber].vehicleChecks.hasOwnProperty(property)) {
+            if (vehicleData[unitNumber].vehicleChecks[property].guid == guid) {
+                row = vehicleData[unitNumber].vehicleChecks[property];
+                break;
+            }
+        }
+    }
+
+    return row;
+}
 
 
 // Handle offline mode

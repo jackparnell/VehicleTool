@@ -94,6 +94,6 @@ label.error {
 
 }
 
-#recentDamageReportsView tr td {
+#recentDamageReportsView tr td, #recentDefectsView tr td, #recentChecksView tr td {
     cursor: pointer;
 }

@@ -194,9 +194,9 @@
                 );
             });
 
-            $('#recentChecks').click(function() {
-                $('label.error, form:not(#step3)').hide();
-                $('#step3').slideUp();
+            $('#recentChecks, #backToRecentChecks').click(function() {
+                $('label.error, form:not(#step3):not(#vehicleCheckRow)').hide();
+                $('#step3, #vehicleCheckRow').slideUp();
 
                 populateRecentChecks();
 
@@ -288,9 +288,9 @@
             });
 
 
-            $('#recentDamageReports').click(function() {
-                $('form:not(#step3)').hide();
-                $('#step3').slideUp();
+            $('#recentDamageReports, #backToRecentDamageReports').click(function() {
+                $('form:not(#step3):not(#recentDamageRow)').hide();
+                $('#step3, #recentDamageRow').slideUp();
 
                 populateRecentDamageReports();
 
@@ -302,29 +302,10 @@
                 );
             });
 
-            $('#recentDamageReportsView tr td').click(function(e) {
-                $('form:not(#recentDamageReportsView)').hide();
-                $('#recentDamageReportsView').slideUp();
 
-                console.log(e);
-                console.log(this.id);
-                console.log(this.parent('tr').id);
-
-
-                $('#recentDamageRow').slideDown(
-                    400,
-                    function() {
-                        window.location.hash = "#recentDamageRow";
-                    }
-                );
-            });
-
-
-
-
-            $('#recentDefects').click(function() {
-                $('form:not(#step3)').hide();
-                $('#step3').slideUp();
+            $('#recentDefects, #backToRecentDefects').click(function() {
+                $('form:not(#step3):not(#recentDefectRow)').hide();
+                $('#step3, #recentDefectRow').slideUp();
 
                 populateRecentDefects();
 
@@ -359,6 +340,11 @@
 
                 if (!hash) {
                     hash = '#step1';
+                }
+
+                // If has contains Row_, then it is a view of a row.
+                if (hash.indexOf('Row_') != -1) {
+                    return;
                 }
 
                 $('form:not(' + hash + ')').hide();
@@ -792,12 +778,123 @@
             Unit
         </p>
 
-        <ul>
-            <li>Driver: <span class="value"></span></li>
-        </ul>
+        <table class="table table-responsive table-bordered">
+            <tr>
+                <td>Driver</td>
+                <td><span class="driverFirstName"></span> <span class="driverLastName"></span></td>
+            </tr>
+            <tr>
+                <td>Driver Signature</td>
+                <td><span class="damageDriverSignature"></span></td>
+            </tr>
+            <tr>
+                <td>Damage Location</td>
+                <td><span class="damageLocation"></span></td>
+            </tr>
+            <tr>
+                <td>Damage Description</td>
+                <td><span class="damageDescription"></span></td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td><span class="date"></span></td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td><span class="time"></span></td>
+            </tr>
+        </table>
 
         <div class="row">
-            <button id="recentDamageReports" class="btn btn-custom">Back to Results</button>
+            <button id="backToRecentDamageReports" class="btn btn-custom">Back to Results</button>
+        </div>
+
+    </form>
+
+    <form id="recentDefectRow">
+        <h1>Recent Defect</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <table class="table table-responsive table-bordered">
+            <tr>
+                <td>Driver</td>
+                <td><span class="driverFirstName"></span> <span class="driverLastName"></span></td>
+            </tr>
+            <tr>
+                <td>Driver Signature</td>
+                <td><span class="driverSignature"></span></td>
+            </tr>
+            <tr>
+                <td>Defect Category</td>
+                <td><span class="defectCategory"></span></td>
+            </tr>
+            <tr>
+                <td>Defect Description</td>
+                <td><span class="defectDescription"></span></td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td><span class="date"></span></td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td><span class="time"></span></td>
+            </tr>
+        </table>
+
+        <div class="row">
+            <button id="backToRecentDefects" class="btn btn-custom">Back to Results</button>
+        </div>
+
+    </form>
+
+    <form id="vehicleCheckRow">
+        <h1>Vehicle Check</h1>
+
+        <p class="unitInfo">
+            Unit
+        </p>
+
+        <table class="table table-responsive table-bordered">
+            <tr>
+                <td>Driver</td>
+                <td><span class="driverFirstName"></span> <span class="driverLastName"></span></td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td><span class="date"></span></td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td><span class="time"></span></td>
+            </tr>
+            <tr>
+                <td>Oil</td>
+                <td><span class="oil"></span></td>
+            </tr>
+            <tr>
+                <td>Water</td>
+                <td><span class="water"></span></td>
+            </tr>
+            <tr>
+                <td>Lights</td>
+                <td><span class="lights"></span></td>
+            </tr>
+            <tr>
+                <td>Tyres</td>
+                <td><span class="tyres"></span></td>
+            </tr>
+            <tr>
+                <td>Brakes</td>
+                <td><span class="brakes"></span></td>
+            </tr>
+        </table>
+
+        <div class="row">
+            <button id="backToRecentChecks" class="btn btn-custom">Back to Results</button>
         </div>
 
     </form>
